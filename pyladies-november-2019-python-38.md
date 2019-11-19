@@ -1,39 +1,19 @@
-# What's New in Python 3.8
+# What's New in Python 3.8 :snake:
 ## PyLadies November 2019
 
 ---
 
-# Language changes
+# Random changes
 
-- walrus operators
-- position only parameters
-- f-strings support = for self-documenting expressions and debugging
-
----
-
-# Library changes
-
-- typing
-    - Literal types
-    - Typed dictionaries
-    - Final objects
-    - Protocols
 - importlib.metadata
-- math
-- statistics
+- math and statistics improvements
 - multiprocessing.shared_memory
-
----
-
-# C and CPython changes
-
 - Parallel filesystem cache for compiled bytecode files
 - Debug build uses the same ABI as release build
 - PEP 578: Python Runtime Audit Hooks
 - PEP 587: Python Initialization Configuration
 - Vectorcall: a fast calling protocol for CPython
 - Pickle protocol 5 with out-of-band data buffers
-- SyntaxWarnings for potential mistakes
 - Lotsa speed improvements
 
 ---
@@ -92,8 +72,6 @@ value: spam
 
 # Position Only Arguments
 
-Mostly of interest to library writers. Big benefit is more explicit args and can rename internally without affecting people's code. Very subtle change.
-
 ```python
 >>> float(x="1.2")
 Traceback (most recent call last):
@@ -104,6 +82,8 @@ TypeError: float() takes no keyword arguments
 >>> float("1.2")
 1.2
 ```
+
+^ Mostly of interest to library writers. Big benefit is more explicit args and can rename internally without affecting people's code. Very subtle change.
 
 ---
 
@@ -126,6 +106,60 @@ cheese
 $ mypy typing_literal.py
 typing_literal.py:6: error: Argument 1 to "ham" has incompatible type \
 "Literal['cheese']"; expected "Union[Literal['spam'], Literal['eggs']]"
+Found 1 error in 1 file (checked 1 source file)
+```
+
+---
+
+# typing.TypedDict
+
+```python
+import typing
+
+class HamDict(typing.TypedDict):
+    ham: str
+    spam: int
+    eggs: float
+
+x: HamDict = {"ham": "spam", "spam": "13", "eggs": 1.2}
+print(x)
+y: HamDict = {"ham": 12, "eggs": "spam"}
+print(y)
+```
+
+```sh
+$ python typing_typeddict.py
+{'ham': 'spam', 'spam': '13', 'eggs': 1.2}
+{'ham': 12, 'eggs': 'spam'}
+
+$ mypy typing_typeddict.py
+typing_typeddict.py:8: error: \
+Incompatible types (expression has type "str", TypedDict item "spam" has type "int")
+typing_typeddict.py:10: error: Key 'spam' missing for TypedDict "HamDict"
+Found 2 errors in 1 file (checked 1 source file)
+```
+
+---
+
+# typing.Final
+
+```python
+import typing
+
+pi: typing.Final[float] = 3.1415926536
+r = 2.5
+print(f"{pi=} {pi*r*r=}")
+pi = 2
+print(f"{pi=} {pi*r*r=}")
+```
+
+```sh
+$ python typing_final.py
+pi=3.1415926536 pi*r*r=19.634954085
+pi=2 pi*r*r=12.5
+
+$ mypy typing_final.py
+typing_final.py:6: error: Cannot assign to final name "pi"
 Found 1 error in 1 file (checked 1 source file)
 ```
 
@@ -268,3 +302,13 @@ INFO:root:foo
 ```
 
 :rainbow:  `pip install coloredlogs` then use `coloredlogs.install()`
+
+---
+
+# Links
+
+* https://realpython.com/python38-new-features/ - good overview of what's new in 3.8
+* https://docs.python.org/3.8/whatsnew/3.8.html - official what's new, can be hard to read (something cool might be a bullet point).
+* https://github.com/pyenv/pyenv - Install and manage lots of Python versions (version manager)
+* https://asdf-vm.com - Even higher level, version manager for version managers (including pyenv)
+* https://github.com/micktwomey/pyladies-november-2019-python-38 - this talk
