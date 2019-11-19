@@ -1,3 +1,5 @@
+theme: Huerta
+
 # What's New in Python 3.8 :snake:
 ## PyLadies November 2019
 
@@ -87,6 +89,27 @@ TypeError: float() takes no keyword arguments
 
 ---
 
+# f-string improvements
+
+```python
+>>> x, y, z, a, b, c = range(6)
+
+# old
+>>> f"x={x} y={y} z={z} a={a} b={b} c={c}"
+'x=0 y=1 z=2 a=3 b=4 c=5'
+
+# new
+>>> f"{x=} {y=} {z=} {a=} {b=} {c=}"
+'x=0 y=1 z=2 a=3 b=4 c=5'
+
+# with expressions!
+>>> print(f'{theta=}  {cos(radians(theta))=:.3f}')
+theta=30  cos(radians(theta))=0.866
+```
+
+
+---
+
 # typing.Literal
 
 ```python
@@ -161,26 +184,6 @@ pi=2 pi*r*r=12.5
 $ mypy typing_final.py
 typing_final.py:6: error: Cannot assign to final name "pi"
 Found 1 error in 1 file (checked 1 source file)
-```
-
---- 
-
-# f-string improvements
-
-```python
->>> x, y, z, a, b, c = range(6)
-
-# old
->>> f"x={x} y={y} z={z} a={a} b={b} c={c}"
-'x=0 y=1 z=2 a=3 b=4 c=5'
-
-# new
->>> f"{x=} {y=} {z=} {a=} {b=} {c=}"
-'x=0 y=1 z=2 a=3 b=4 c=5'
-
-# with expressions!
->>> print(f'{theta=}  {cos(radians(theta))=:.3f}')
-theta=30  cos(radians(theta))=0.866
 ```
 
 ---
