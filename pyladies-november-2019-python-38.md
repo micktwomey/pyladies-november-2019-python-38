@@ -2,6 +2,7 @@ theme: Huerta
 
 # What's New in Python 3.8 :snake:
 ## PyLadies November 2019
+### Michael Twomey (@micktwomey)
 
 ---
 
@@ -107,6 +108,13 @@ TypeError: float() takes no keyword arguments
 theta=30  cos(radians(theta))=0.866
 ```
 
+
+---
+
+# :warning: Content Warning :warning:
+## Type System Stuff Ahead
+
+^ (Mick likes type systems)
 
 ---
 
